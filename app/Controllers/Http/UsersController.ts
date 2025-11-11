@@ -315,7 +315,6 @@ export default class UsersController {
     if(user){
 
       await user.delete()
-      await user.related('userStatistics').query().delete()
 
       response.send ({
         "type":"Exitoso",

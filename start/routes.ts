@@ -30,42 +30,11 @@ Route.get('/countries', 'CountriesController.getCountries')
 Route.group(() =>{
   Route.post('/login', 'AuthController.login')
   Route.post('/logout', 'AuthController.logout').middleware("auth:api")
-  Route.post('/send-code', 'AuthController.sendCode')
-  Route.post('/verify-account', 'AuthController.authenticate')
-  Route.post('/verify-recaptcha', 'AuthController.verifyRecaptcha')
-  Route.put('/correct-email', 'UsersController.updateEmail')
 }).prefix('/auth')
+
 
 Route.group(() =>{
   Route.post('/', 'UsersController.register')
   Route.get('/', 'UsersController.show').middleware("auth:api")
   Route.put('/', 'UsersController.update').middleware("auth:api")
 }).prefix('/user')
-
-Route.group(() =>{
-  Route.get('/', 'UserStatisticsController.index')
-  Route.post('/:game_id', 'UserStatisticsController.store')
-  Route.get('/:game_id', 'UserStatisticsController.show')
-  Route.put('/:game_id', 'UserStatisticsController.update')
-  Route.delete('/:game_id', 'UserStatisticsController.destroy')
-  Route.get('/game-ranking/:game_id', 'UserStatisticsController.showGameRanking')
-}).prefix('/user-statistics').middleware("auth:api")
-
-Route.group(() =>{
-  Route.get('/', 'GamesController.index')
-  Route.post('/', 'GamesController.store')
-  Route.get('/:game_id', 'GamesController.show')
-  Route.put('/:game_id', 'GamesController.update')
-  Route.delete('/:game_id', 'GamesController.destroy')
-}).prefix('/games').middleware("auth:api")
-
-Route.group(() =>{
-  Route.post('/', 'RoomsController.create')
-  Route.get('/:room_code', 'RoomsController.show')
-  Route.put('/:room_code', 'RoomsController.update')
-  Route.post('/join/:room_code', 'RoomsController.joinRoom')
-  Route.post('/verify/:room_code', 'RoomsController.verifyRoomAccess')
-  Route.post('/winner/:room_code', 'RoomsController.addWinnerMatch')
-  Route.post('/looser/:room_code', 'RoomsController.addLooserMatch')
-  Route.put('/statistics/:room_code/:winner', 'RoomsController.updateStatistics')
-}).prefix('/room').middleware("auth:api")
